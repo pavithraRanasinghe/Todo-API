@@ -16,7 +16,15 @@ app.post('/todo',(req,res)=>{
     newTodo.save().then((doc)=>{
         res.send(doc);
     },(err)=>{
-        res.send("Bad Request");
+        res.status(400).send(err);
+    });
+});
+
+app.get('/todo',(req,res)=>{
+    todo.find().then((result)=>{
+        res.send({result});
+    },(err)=>{
+        res.status(400).send(err);
     });
 });
 
