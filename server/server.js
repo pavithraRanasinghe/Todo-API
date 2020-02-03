@@ -100,18 +100,14 @@ app.post('/user',(req,res)=>{
     const user = new User(body);
 
     user.save().then((user)=>{
-        res.send(user);
+        return user.generateAuthToken();
+    }).then((token)=>{
+        res.header('x-auth',token).send(user);
     }).catch((e)=>{
         res.status(400).send(e);
     });
 });
-app.get('/user',(req,res)=>{
-   user.find().then((result)=>{
-        res.send(result);
-   }),(err)=>{
-       res.status(400).send(err);
-   }
-});
+
 
 app.listen(3000,()=>{
     console.log("Server started on port 3000");
